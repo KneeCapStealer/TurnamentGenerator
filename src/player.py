@@ -2,17 +2,21 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 class Player(object):
-    def __init__(self, name, pos):
+    font = ImageFont.truetype('../fonts/Main-font.TTF', size=28)
+    color: str = 'white'
+    strokeWidth: int = 3
+    strokeColor: str = 'black'
+
+    def __init__(self, name: str, pos: tuple[int, int], img: Image.Image):
         self.__name: str = name
-        self.__alive: bool = True
+        self.alive: bool = True
 
-        self.__pos: tuple[int] = pos
-
-    def advance(self):
-        pass
+        self.__pos: tuple[int, int] = pos
+        self.__draw = ImageDraw.Draw(img)
 
     def draw(self):
-        pass
+        self.__draw.text(xy=self.__pos, text=self.__name, fill=Player.color,
+                         font=Player.font, stroke_fill=Player.strokeColor, stroke_width=Player.strokeWidth)
 
     def __repr__(self):
-        return '[{name}, {status}, {pos}]'.format(name=self.__name, status=self.__alive, pos=self.__pos)
+        return '{{{name}, {status}}}'.format(name=self.__name, status=self.alive)
