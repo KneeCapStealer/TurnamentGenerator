@@ -26,7 +26,7 @@ def bool_input(msg: str):
 
 def draw_chall_num(pos: tuple[int, int], num: int, img: Image.Image):
     ImageDraw.Draw(img).text(xy=pos, text=str(num), fill=Player.color,
-                             font=ImageFont.truetype('../fonts/Main-font.TTF', size=50),
+                             font=ImageFont.truetype('../fonts/Main-font.TTF', size=80),
                              stroke_fill=Player.strokeColor, stroke_width=Player.strokeWidth)
 
 
