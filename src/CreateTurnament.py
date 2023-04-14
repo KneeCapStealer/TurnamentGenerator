@@ -30,11 +30,7 @@ def main():
     for i, name in enumerate(names):
         players.append(Player(name, startPositions[i], img))
 
-    print(f'{names=}')
-    print(f'{players=}')
-
     pairs = Util.generate_pairs(players)
-    print(f'\n{pairs=}')
 
     for player in players:
         player.draw()
@@ -43,27 +39,23 @@ def main():
     for roundNum in range(3):
 
         for fightNum, pair in enumerate(pairs):
-            print('Current challengers {pair}'
-                  .format(pair=pair))
             if len(pair) < 2:
                 if roundNum == 2:
                     print(f'The winner is {pair[0].name}')
                     break
 
-                print('There is only a single challenger remaining, skipping to next round')
+                print('\nThere is only a single challenger remaining, skipping to next round')
                 Util.draw_chall_num(roundPos[roundNum][fightNum], players.index(pair[0])+1, img)
                 img.show()
                 pairs = Util.generate_pairs([player for player in players if player.alive])
                 break
 
-            print('\ncurrent pair: {pair}\nChallenger 1 index: {chl1}\nChallenger 2 index: {chl2}\n'
-                  .format(pair=pair, chl1=players.index(pair[0]), chl2=players.index(pair[1])))
-
-            print('challenger number \'{one}\' and \'{two}\' are fighting now'
-                  .format(one=players.index(pair[0])+1, two=players.index(pair[1])+1))
+            print('\nchallenger number {one} \'{name1}\' and {two} \'{name2}\' are fighting now'
+                  .format(one=players.index(pair[0])+1, two=players.index(pair[1])+1,
+                          name1=pair[0].name, name2=pair[1].name))
 
             while True:
-                winner = Util.int_input('\nPlease type which challenger won the battle here ({one} or {two}): '
+                winner = Util.int_input('Please type which challenger won the battle here ({one} or {two}): '
                                         .format(one=players.index(pair[0])+1, two=players.index(pair[1])+1))
 
                 if winner != players.index(pair[0])+1 and winner != players.index(pair[1])+1:

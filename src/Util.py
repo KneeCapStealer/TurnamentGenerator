@@ -36,7 +36,6 @@ def generate_pairs(players: list[Player]):
     # Every Even challenger
     groupB = players[1::2]
 
-    print(f'\n{groupA=}\n{groupB=}')
     if len(groupA) == len(groupB):
         return tuple(zip(groupA, groupB))
     else:
