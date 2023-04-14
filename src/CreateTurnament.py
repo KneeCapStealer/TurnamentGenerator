@@ -1,4 +1,3 @@
-from PIL import Image, ImageDraw, ImageFont
 from player import *
 import random
 import Util
