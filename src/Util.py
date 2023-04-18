@@ -1,4 +1,6 @@
-from PIL import Image, ImageDraw, ImageFont
+import psutil
+
+from PIL import Image, ImageDraw, ImageFont, Image
 from player import Player
 
 
@@ -51,3 +53,9 @@ def load_image(filePath: str) -> Image.Image:
     except OSError:
         print('couldn\'t find Smash tournament image, default is orange screen')
         return Image.new(mode="RGBA", size=(400, 300), color='darkorange')
+
+
+def close_img():
+    for proc in psutil.process_iter():
+        if proc.name() == "display":
+            proc.kill()

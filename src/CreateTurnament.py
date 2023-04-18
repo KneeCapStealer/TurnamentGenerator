@@ -1,4 +1,5 @@
-from player import *
+from player import Player
+import UIManager as UI
 import random
 import Util
 
@@ -43,12 +44,12 @@ def main():
                     print(f'The winner is {pair[0].name}')
 
                     Util.draw_chall_num(roundPos[2][0], players.index(pair[0]) + 1, img)
-                    img.show()
+                    img.save('../modImg/tournament.png', 'PNG')
                     break
 
                 print('\nThere is only a single challenger remaining, skipping to next round')
                 Util.draw_chall_num(roundPos[roundNum][fightNum], players.index(pair[0])+1, img)
-                img.show()
+                img.save('../modImg/tournament.png', 'PNG')
                 pairs = Util.generate_pairs([player for player in players if player.alive])
                 break
 
@@ -80,7 +81,7 @@ def main():
                 print(f'The winner is {players[winner-1].name}')
 
             Util.draw_chall_num(roundPos[roundNum][fightNum], winner, img)
-            img.show()
+            img.save('../modImg/tournament.png', 'PNG')
 
         else:
             print('No more challengers remaining, going to the next round')
@@ -88,4 +89,5 @@ def main():
 
 
 if __name__ == "__main__":
+    test = UI.UIManager()
     main()
