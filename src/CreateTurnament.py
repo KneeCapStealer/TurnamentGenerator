@@ -1,4 +1,5 @@
-from player import *
+from player import Player
+import UIManager as Ui
 import random
 import Util
 
@@ -12,9 +13,9 @@ def main():
 
     semiPositions = ((750, 702), (750, 1159), (1702, 702), (1702, 1159))
     finalPositions = ((1114, 930), (1343, 930))
-    roundPos = (semiPositions, finalPositions)
+    winnerPos = ((1225, 800), )
 
-    winnerPos = (1225, 800)
+    roundPos = (semiPositions, finalPositions, winnerPos)
 
     while True:
         names = input("Hello, please type in player names like so:(name1, name2, name3, ...): ").split(", ")
@@ -41,11 +42,14 @@ def main():
             if len(pair) < 2:
                 if roundNum == 2:
                     print(f'The winner is {pair[0].name}')
+
+                    Util.draw_chall_num(roundPos[2][0], players.index(pair[0]) + 1, img)
+                    img.save('../modImg/tournament.png', 'PNG')
                     break
 
                 print('\nThere is only a single challenger remaining, skipping to next round')
                 Util.draw_chall_num(roundPos[roundNum][fightNum], players.index(pair[0])+1, img)
-                img.show()
+                img.save('../modImg/tournament.png', 'PNG')
                 pairs = Util.generate_pairs([player for player in players if player.alive])
                 break
 
@@ -53,15 +57,18 @@ def main():
                   .format(one=players.index(pair[0])+1, two=players.index(pair[1])+1,
                           name1=pair[0].name, name2=pair[1].name))
 
+            # Keep asking for the winning challenger until a correct number is entered and the action is verified
             while True:
                 winner = Util.int_input('Please type which challenger won the battle here ({one} or {two}): '
                                         .format(one=players.index(pair[0])+1, two=players.index(pair[1])+1))
 
+                # Make sure the input is correct
                 if winner != players.index(pair[0])+1 and winner != players.index(pair[1])+1:
                     print('Needs to be challenger {one} or {two}'
                           .format(one=players.index(pair[0])+1, two=players.index(pair[1])+1))
                     continue
 
+                # Verify answer and set the loosing player to {player.alive = False}
                 if input(f'Are you sure challenger {winner} won? y/n ') == 'y':
                     for player in pair:
                         player.alive = False
@@ -69,21 +76,18 @@ def main():
                     players[winner - 1].alive = True
                     break
 
+            # if It's the last
             if roundNum == 2:
                 print(f'The winner is {players[winner-1].name}')
-                break
 
             Util.draw_chall_num(roundPos[roundNum][fightNum], winner, img)
-            img.show()
+            img.save('../modImg/tournament.png', 'PNG')
 
         else:
             print('No more challengers remaining, going to the next round')
             pairs = Util.generate_pairs([player for player in players if player.alive])
 
-    winnerPlayer = next((players.index(player) for player in players if player.alive), 68) + 1
-    Util.draw_chall_num(winnerPos, winnerPlayer, img)
-    img.show()
-
 
 if __name__ == "__main__":
+    test = Ui.UIManager()
     main()

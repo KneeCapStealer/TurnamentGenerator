@@ -3,6 +3,8 @@
 !.idea/.gitignore
 !.gitignore
 
+*/__pycache__/
+
 # Default ignored files
 /shelf/
 /workspace.xml
